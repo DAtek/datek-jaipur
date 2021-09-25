@@ -15,7 +15,7 @@ def create_logger(name: str) -> Logger:
     return logger
 
 
-class FakeLogger(Logger):
+class FakeLogger(Logger):  # pragma: no cover
     def critical(self, *args, **kwargs) -> None:
         pass
 

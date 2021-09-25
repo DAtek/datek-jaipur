@@ -2,7 +2,7 @@ from abc import abstractmethod
 from functools import wraps
 from typing import TypeVar, Generic
 
-from jaipur.errors import EventAlreadyAppliedError
+from jaipur.errors import EventAlreadyAppliedError, EventNotAppliedError
 from jaipur.log import create_logger
 
 logger = create_logger(__name__)
@@ -30,6 +30,8 @@ Result = TypeVar("Result")
 
 
 class BaseEvent(Generic[Result], metaclass=EventMeta):
+    _result: Result
+
     def __new__(cls, *args, **kwargs):
         obj = object.__new__(cls)
         obj._result = ...
@@ -40,15 +42,18 @@ class BaseEvent(Generic[Result], metaclass=EventMeta):
             raise EventAlreadyAppliedError
 
         self.validate()
-        self._apply()
+        self._result = self._create_result()
 
     @property
     def result(self) -> Result:
+        if self._result is ...:
+            raise EventNotAppliedError
+
         return self._result
 
     def validate(self):
         pass
 
     @abstractmethod
-    def _apply(self):  # pragma: no cover
+    def _create_result(self) -> Result:  # pragma: no cover
         pass

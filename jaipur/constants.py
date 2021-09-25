@@ -1,24 +1,4 @@
-from enum import Enum
-
-
-class GoodsType(Enum):
-    DIAMOND = "Diamond"
-    GOLD = "Gold"
-    SILVER = "Silver"
-    CLOTH = "Cloth"
-    SPICE = "Spice"
-    LEATHER = "Leather"
-    CAMEL = "Camel"
-
-    def __repr__(self):
-        return self.value
-
-
-class TurnType(Enum):
-    TRADE_GOODS = "Trade goods"
-    SELL_GOODS = "Sell goods"
-    BUY_GOODS = "Buy goods"
-
+from jaipur.compound_types.goods import GoodsType
 
 CARD_AMOUNTS = {
     GoodsType.DIAMOND: 6,
@@ -30,7 +10,7 @@ CARD_AMOUNTS = {
     GoodsType.CAMEL: 11,
 }
 
-COINS = {
+COIN_COLLECTION = {
     GoodsType.DIAMOND: (7, 7, 5, 5, 5),
     GoodsType.GOLD: (6, 6, 5, 5, 5),
     GoodsType.SILVER: (5, 5, 5, 5, 5),
