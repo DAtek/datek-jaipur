@@ -12,3 +12,7 @@ class EventNotAppliedError(JaipurError):
 
 class ExactlyTwoPlayersRequiredError(JaipurError):
     pass
+
+
+class DataNotCollectedError(JaipurError):
+    pass

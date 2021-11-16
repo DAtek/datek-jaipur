@@ -1,32 +1,27 @@
-from typing import NamedTuple
+from dataclasses import dataclass
 
 from jaipur.compound_types.card import CardSet
 from jaipur.simple_types import Name, Number
 
 
-PlayerFields = NamedTuple(
-    "PlayerFields",
-    [
-        ("name", Name),
-        ("score", Number),
-        ("cards", CardSet),
-    ],
-)
+@dataclass(frozen=True)
+class Player:
+    name: Name
+    score: Number
+    cards: CardSet
 
-
-class Player(PlayerFields):
     def __hash__(self) -> Number:
         return hash(self.name)
 
     def __eq__(self, other: "Player"):
         return hash(self) == hash(other)
 
+    def __str__(self) -> Name:
+        return self.name
 
-PlayerCollection = NamedTuple(
-    "PlayerCollection",
-    [
-        ("player1", Player),
-        ("player2", Player),
-        ("current_player", Player),
-    ],
-)
+
+@dataclass(frozen=True)
+class PlayerCollection:
+    player1: Player
+    player2: Player
+    current_player: Player

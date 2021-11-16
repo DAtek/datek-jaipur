@@ -1,3 +1,6 @@
+.vscode/
+htmlcov/
 .idea/
 .pytest_cache/
 *.pyc
+.coverage

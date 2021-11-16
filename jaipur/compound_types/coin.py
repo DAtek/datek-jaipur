@@ -1,20 +1,15 @@
-from typing import NamedTuple
+from dataclasses import dataclass
 
 from jaipur.compound_types.goods import GoodsType
 from jaipur.simple_types import Number, Amount
 
 
-CoinFields = NamedTuple(
-    "CoinFields",
-    [
-        ("type", GoodsType),
-        ("value", Number),
-        ("id", Number),
-    ],
-)
+@dataclass(frozen=True)
+class Coin:
+    type: GoodsType
+    value: Number
+    id: Number
 
-
-class Coin(CoinFields):
     def __repr__(self):
         return f"{self.type}: {self.value}"
 
@@ -31,16 +26,10 @@ class CoinSet(set[Coin]):
         return sum(Number(item) for item in self)
 
     def retrieve(self, type_: GoodsType, amount: Amount) -> "CoinSet":
-        coins = []
-        sorted_coins = sorted(self, key=lambda item: item.value, reverse=True)
+        sorted_coins = sorted(
+            (item for item in self if item.type == type_),
+            key=lambda item: item.value,
+            reverse=True
+        )
 
-        for item_ in sorted_coins:
-            if item_.type != type_:
-                continue
-
-            coins.append(item_)
-            if len(coins) == amount:
-                break
-
-        coins = CoinSet(coins)
-        return coins
+        return CoinSet(sorted_coins[:amount])

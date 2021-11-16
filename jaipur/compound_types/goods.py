@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class GoodsType(Enum):
+class GoodsType(str, Enum):
     DIAMOND = "Diamond"
     GOLD = "Gold"
     SILVER = "Silver"
@@ -9,6 +9,3 @@ class GoodsType(Enum):
     SPICE = "Spice"
     LEATHER = "Leather"
     CAMEL = "Camel"
-
-    def __repr__(self):
-        return self.value

@@ -1,6 +1,7 @@
-from abc import abstractmethod
-from functools import wraps
-from typing import TypeVar, Generic
+from abc import ABCMeta, abstractmethod
+from asyncio import get_event_loop
+from functools import wraps, partial
+from typing import TypeVar, Generic, Callable
 
 from jaipur.errors import EventAlreadyAppliedError, EventNotAppliedError
 from jaipur.log import create_logger
@@ -8,15 +9,15 @@ from jaipur.log import create_logger
 logger = create_logger(__name__)
 
 
-class EventMeta(type):
-    def __new__(mcs, name: str, bases: tuple, namespace: dict):
-        class_ = super().__new__(mcs, name, bases, namespace)
+class EventMeta(ABCMeta):
+    def __new__(cls, name: str, bases: tuple, namespace: dict):
+        class_ = super().__new__(cls, name, bases, namespace)
 
-        def log_event(func: callable):
+        def log_event(func: Callable):
             @wraps(func)
             def wrapper(self):
                 result = func(self)
-                logger.debug(f"{self} Result: {self.result}")
+                logger.debug("%s Result: %s", result, self.result)
                 return result
 
             return wrapper
@@ -57,3 +58,9 @@ class BaseEvent(Generic[Result], metaclass=EventMeta):
     @abstractmethod
     def _create_result(self) -> Result:  # pragma: no cover
         pass
+
+
+async def run_in_thread_pool(func, *args, **kwargs):
+    loop = get_event_loop()
+    partial_ = partial(func, *args, **kwargs)
+    return await loop.run_in_executor(None, partial_)
