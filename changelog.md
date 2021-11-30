@@ -1,6 +1,3 @@
-[![pipeline status](https://gitlab.com/DAtek/datek-jaipur/badges/master/pipeline.svg)](https://gitlab.com/DAtek/datek-jaipur/-/commits/master)
-[![coverage report](https://gitlab.com/DAtek/datek-jaipur/badges/master/coverage.svg)](https://gitlab.com/DAtek/datek-jaipur/-/commits/master)
-
 # Changelog
 All notable changes to this project will be documented in this file.
 

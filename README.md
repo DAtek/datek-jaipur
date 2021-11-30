@@ -1,3 +1,6 @@
+[![pipeline status](https://gitlab.com/DAtek/datek-jaipur/badges/master/pipeline.svg)](https://gitlab.com/DAtek/datek-jaipur/-/commits/master)
+[![coverage report](https://gitlab.com/DAtek/datek-jaipur/badges/master/coverage.svg)](https://gitlab.com/DAtek/datek-jaipur/-/commits/master)
+
 # Jaipur board game
 
 The game rules are implemented in *Domain Driven* -ish fashion.  
