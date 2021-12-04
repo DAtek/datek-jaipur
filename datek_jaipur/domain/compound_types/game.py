@@ -4,7 +4,7 @@ from typing import Optional
 from datek_jaipur.domain.compound_types.card import CardSet
 from datek_jaipur.domain.compound_types.coin import CoinSet
 from datek_jaipur.domain.compound_types.player import Player
-from datek_jaipur.simple_types import Name
+from datek_jaipur.domain.simple_types import Name
 
 
 @dataclass(frozen=True)

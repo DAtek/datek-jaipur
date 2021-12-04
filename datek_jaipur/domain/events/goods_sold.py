@@ -8,7 +8,7 @@ from datek_jaipur.domain.compound_types.turn import GoodsSoldEventInput
 from datek_jaipur.domain.constants import MULTIPLE_SOLD_BONUS_MAP, LARGEST_HERD_BONUS
 from datek_jaipur.domain.errors.goods_sold import NotEnoughCardsError
 from datek_jaipur.domain.utils import is_game_ended, get_herd_master
-from datek_jaipur.simple_types import Amount
+from datek_jaipur.domain.simple_types import Amount
 from datek_jaipur.utils import BaseEvent
 
 

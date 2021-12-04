@@ -12,7 +12,3 @@ class EventAlreadyAppliedError(JaipurError):
 
 class EventNotAppliedError(JaipurError):
     pass
-
-
-class ExactlyTwoPlayersRequiredError(JaipurError):
-    pass

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from datek_jaipur.domain.compound_types.goods import GoodsType
-from datek_jaipur.simple_types import Number, Amount
+from datek_jaipur.domain.simple_types import Number, Amount
 
 
 @dataclass(frozen=True)

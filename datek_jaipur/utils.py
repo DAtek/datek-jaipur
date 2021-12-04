@@ -65,11 +65,10 @@ class CustomThreadExecutor:
         thread.start()
         await self._result
         result = self._result.result()
-        thread.join()
         if isinstance(result, Exception):
             raise result
 
-        return self._result.result()
+        return result
 
     def _run(self):
         try:
