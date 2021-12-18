@@ -5,7 +5,7 @@ from datek_jaipur.domain.compound_types.game import Game
 from datek_jaipur.domain.constants import CARD_AMOUNTS, COIN_COLLECTION
 from datek_jaipur.domain.errors.game_created import PlayerNamesAreSameError
 from datek_jaipur.domain.events.game_created import GameCreated
-from tests.domain.events.conftest import PLAYER1, PLAYER2
+from tests.unit.domain.events.conftest import PLAYER1, PLAYER2
 
 
 class TestGameCreated:

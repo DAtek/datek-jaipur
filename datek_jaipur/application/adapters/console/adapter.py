@@ -19,7 +19,6 @@ from datek_jaipur.application.adapters.console.formatters import (
     format_error,
 )
 from datek_jaipur.application.state_machine.states import Start, End, PlayerTurn
-from datek_jaipur.domain.compound_types.game import Game
 from datek_jaipur.domain.events.game_created import GameCreated
 from datek_jaipur.domain.events.goods_traded import GoodsTraded
 from datek_jaipur.utils import run_in_thread_pool, BaseEvent

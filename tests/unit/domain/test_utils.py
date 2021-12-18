@@ -3,7 +3,7 @@ from functools import lru_cache
 from pytest import fixture
 
 from datek_jaipur.domain.utils import get_herd_master, get_winner
-from tests.domain.fixtures import Scenario, generate_scenarios
+from tests.unit.domain.fixtures import Scenario, generate_scenarios
 
 
 def test_get_herd_master(scenario: Scenario):

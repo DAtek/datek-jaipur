@@ -5,7 +5,7 @@ from pytest import mark, fixture
 
 from datek_jaipur.application.adapters.console import adapter
 from datek_jaipur.application.console import create_fsm
-from tests.application.utils import FakeStandardIO, Solver, timeout_watcher
+from tests.acceptance.application.utils import FakeStandardIO, Solver, timeout_watcher
 
 
 @mark.asyncio
