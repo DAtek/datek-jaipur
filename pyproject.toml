@@ -13,8 +13,8 @@ run-console-app = "datek_jaipur.application.console:main"
 
 
 [tool.poetry.dependencies]
-python = "^3.9"
-datek-async-fsm = "^0.1.2"
+python = "^3.10"
+datek-async-fsm = "^0.2.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
