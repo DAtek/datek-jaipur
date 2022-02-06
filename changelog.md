@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adapter for ASGI 3.0 interface
 
 
+## [0.1.1] - 2022-02-06
+### Changed
+- `datek-async-fsm` was upgraded to `^0.2.0`
+- Project was migrated to GitHub
+
+
 ## [0.1.0] - 2021-11-30
 ### Added
 
