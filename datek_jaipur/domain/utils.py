@@ -15,12 +15,16 @@ def get_herd_master(player1: Player, player2: Player) -> Optional[Player]:
     elif player2_herd_size > player1_herd_size:
         return player2
 
+    return None
+
 
 def get_winner(player1: Player, player2: Player) -> Optional[Player]:
     if player1.score > player2.score:
         return player1
     elif player2.score > player1.score:
         return player2
+
+    return None
 
 
 def is_game_ended(remaining_coins: CoinSet, cards_on_deck: CardSet):

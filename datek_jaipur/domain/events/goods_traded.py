@@ -1,22 +1,21 @@
 from collections import Counter
 from typing import Generator
 
-from datek_jaipur.domain.compound_types.card import CardSet, Card
+from datek_jaipur.domain.compound_types.card import Card, CardSet
 from datek_jaipur.domain.compound_types.game import Game
 from datek_jaipur.domain.compound_types.goods import GoodsType
 from datek_jaipur.domain.compound_types.player import Player
 from datek_jaipur.domain.compound_types.turn import GoodsTradedInput
 from datek_jaipur.domain.errors.goods_traded import (
+    GoodsCountsMismatchError,
     NotEnoughResourcesAtPlayerError,
     NotEnoughResourcesOnDeskError,
-    GoodsCountsMismatchError,
 )
-from datek_jaipur.utils import BaseEvent, Result
+from datek_jaipur.utils import BaseEvent
 
 
-class GoodsTraded(BaseEvent[GoodsTradedInput, Game]):
-    class Config:
-        input_type = GoodsTradedInput
+class GoodsTraded(BaseEvent[Game]):
+    _data_model: GoodsTradedInput
 
     async def _validate(self):
         if len(self._data_model.goods_to_acquire) != len(
@@ -49,7 +48,7 @@ class GoodsTraded(BaseEvent[GoodsTradedInput, Game]):
             if resources_on_deck.get(goods_type, -1) < count:
                 raise NotEnoughResourcesOnDeskError(goods_type)
 
-    async def _create_result(self) -> Result:
+    async def _create_result(self) -> Game:
         cards_to_pick = CardSet(card for card in self._get_cards_to_pick())
         cards_to_throw = CardSet(card for card in self._get_cards_to_throw())
         herd = cards_to_pick.filter_by_type(GoodsType.CAMEL)

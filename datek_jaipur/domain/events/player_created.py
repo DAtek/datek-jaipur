@@ -3,9 +3,8 @@ from datek_jaipur.domain.errors.player_created import InvalidNameError
 from datek_jaipur.utils import BaseEvent
 
 
-class PlayerCreated(BaseEvent[PlayerCreatedEventInput, Player]):
-    class Config:
-        input_type = PlayerCreatedEventInput
+class PlayerCreated(BaseEvent[Player]):
+    _data_model: PlayerCreatedEventInput
 
     async def _validate(self):
         self._data_model.name = self._data_model.name.strip()

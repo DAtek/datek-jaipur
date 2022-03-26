@@ -1,6 +1,11 @@
 .vscode/
+.venv/
 htmlcov/
+dist/
+scratch/
 .idea/
 .pytest_cache/
+.mypy_cache/
 *.pyc
 .coverage
+coverage.xml

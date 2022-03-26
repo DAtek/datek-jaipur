@@ -20,10 +20,14 @@ datek-async-fsm = "^0.2.0"
 pytest = "^6.2.5"
 pytest-cov = "^2.12.1"
 black = "^21.9b0"
-pylint = "^2.11.1"
 pytest-asyncio = "^0.16.0"
 pytest-bdd = "^5.0.0"
+mypy = "^0.942"
+unimport = "^0.9.5"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+ignore_missing_imports = true

@@ -16,9 +16,8 @@ from datek_jaipur.domain.events.player_created import PlayerCreated
 from datek_jaipur.utils import BaseEvent
 
 
-class GameCreated(BaseEvent[GameCreatedInput, Game]):
-    class Config:
-        input_type = GameCreatedInput
+class GameCreated(BaseEvent[Game]):
+    _data_model: GameCreatedInput
 
     async def _validate(self):
         if self._data_model.player1_name == self._data_model.player2_name:

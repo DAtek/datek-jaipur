@@ -1,4 +1,5 @@
 from asyncio import create_task
+from typing import Generator
 from unittest.mock import patch, Mock
 
 from pytest import mark, fixture
@@ -49,7 +50,7 @@ async def test_game_played(patched_io, caplog):
 
 
 @fixture
-def patched_io() -> FakeStandardIO:
+def patched_io() -> Generator[FakeStandardIO, None, None]:
     io = FakeStandardIO()
 
     with (
