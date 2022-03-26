@@ -16,7 +16,9 @@ class BaseState(_BaseState):
                 pass
 
     @abstractmethod
-    async def get_next_state(self, states: StateCollection) -> Type["BaseState"]:
+    async def get_next_state(
+        self, states: StateCollection
+    ) -> Type["BaseState"]:  # pragma: no cover
         pass
 
 
