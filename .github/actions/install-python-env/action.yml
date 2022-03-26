@@ -40,6 +40,9 @@ runs:
     if: steps.cache-venv.outputs.cache-hit != 'true'
 
   - name: Install dependencies
-    run: source .venv/bin/activate && poetry install
+    run: |
+      source .venv/bin/activate
+      poetry config experimental.new-installer false
+      poetry install
     shell: bash
     if: steps.cache-venv.outputs.cache-hit != 'true'
