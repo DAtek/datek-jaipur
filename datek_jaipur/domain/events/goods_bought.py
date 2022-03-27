@@ -3,20 +3,18 @@ from datek_jaipur.domain.compound_types.game import Game
 from datek_jaipur.domain.compound_types.goods import GoodsType
 from datek_jaipur.domain.compound_types.player import Player
 from datek_jaipur.domain.compound_types.turn import GoodsBoughtInput
-from datek_jaipur.domain.constants import MAX_CARDS_IN_HAND, LARGEST_HERD_BONUS
+from datek_jaipur.domain.constants import LARGEST_HERD_BONUS, MAX_CARDS_IN_HAND
 from datek_jaipur.domain.errors.goods_bought import (
-    TooMuchCardsInHandError,
     CardNotOnDeckError,
+    TooMuchCardsInHandError,
 )
-from datek_jaipur.domain.utils import get_winner, is_game_ended, get_herd_master
-from datek_jaipur.utils import BaseEvent, Result
+from datek_jaipur.domain.utils import get_herd_master, get_winner, is_game_ended
+from datek_jaipur.utils import BaseEvent
 
 
-class GoodsBought(BaseEvent[GoodsBoughtInput, Game]):
+class GoodsBought(BaseEvent[Game]):
     _picked_cards: CardSet
-
-    class Config:
-        input_type = GoodsBoughtInput
+    _data_model: GoodsBoughtInput
 
     async def _validate(self):
         current_cards_count = len(self._data_model.game.current_player.goods)
@@ -34,7 +32,7 @@ class GoodsBought(BaseEvent[GoodsBoughtInput, Game]):
 
         self._picked_cards = picked_cards
 
-    async def _create_result(self) -> Result:
+    async def _create_result(self) -> Game:
         player = self._data_model.game.current_player
 
         if self._data_model.goods_type == GoodsType.CAMEL:
@@ -77,11 +75,11 @@ class GoodsBought(BaseEvent[GoodsBoughtInput, Game]):
 
         cards_in_pack = self._data_model.game.cards_in_pack - card_pack_to_deck
 
-        if not is_game_ended(self._data_model.game.coins, cards_on_deck):
-            current_player = (
-                player2 if player1 == self._data_model.game.current_player else player1
-            )
+        current_player = (
+            player2 if player1 == self._data_model.game.current_player else player1
+        )
 
+        if not is_game_ended(self._data_model.game.coins, cards_on_deck):
             return Game(
                 player1=player1,
                 player2=player2,
@@ -111,6 +109,7 @@ class GoodsBought(BaseEvent[GoodsBoughtInput, Game]):
         return Game(
             player1=player1,
             player2=player2,
+            current_player=current_player,
             cards_in_pack=cards_in_pack,
             cards_on_deck=cards_on_deck,
             coins=self._data_model.game.coins,

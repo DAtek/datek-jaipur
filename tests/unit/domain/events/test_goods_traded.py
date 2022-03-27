@@ -2,7 +2,7 @@ from pytest import mark, raises
 
 from datek_jaipur.domain.compound_types.card import CardSet, Card
 from datek_jaipur.domain.compound_types.game import Game
-from datek_jaipur.domain.compound_types.goods import GoodsType, GoodsTypeTuple
+from datek_jaipur.domain.compound_types.goods import GoodsType
 from datek_jaipur.domain.compound_types.player import Player
 from datek_jaipur.domain.errors.goods_traded import (
     NotEnoughResourcesAtPlayerError,
@@ -33,8 +33,8 @@ class TestGoodsTraded:
 
         event = GoodsTraded(
             game=game,
-            goods_to_give_away=GoodsTypeTuple([GoodsType.GOLD]),
-            goods_to_acquire=GoodsTypeTuple([game.cards_on_deck.to_list()[0]]),
+            goods_to_give_away=tuple([GoodsType.GOLD]),
+            goods_to_acquire=tuple([game.cards_on_deck.to_list()[0]]),
         )
 
         with raises(NotEnoughResourcesAtPlayerError):
@@ -60,8 +60,8 @@ class TestGoodsTraded:
 
         event = GoodsTraded(
             game=game,
-            goods_to_give_away=GoodsTypeTuple([GoodsType.GOLD]),
-            goods_to_acquire=GoodsTypeTuple([GoodsType.SILVER]),
+            goods_to_give_away=tuple([GoodsType.GOLD]),
+            goods_to_acquire=tuple([GoodsType.SILVER]),
         )
 
         with raises(NotEnoughResourcesOnDeskError):
@@ -91,8 +91,8 @@ class TestGoodsTraded:
 
         event = GoodsTraded(
             game=game,
-            goods_to_give_away=GoodsTypeTuple([gold.type]),
-            goods_to_acquire=GoodsTypeTuple([silver.type, cloth.type]),
+            goods_to_give_away=tuple([gold.type]),
+            goods_to_acquire=tuple([silver.type, cloth.type]),
         )
 
         with raises(GoodsCountsMismatchError):
@@ -123,8 +123,8 @@ class TestGoodsTraded:
 
         event = GoodsTraded(
             game=game,
-            goods_to_give_away=GoodsTypeTuple([camel.type, gold.type]),
-            goods_to_acquire=GoodsTypeTuple([silver.type, cloth.type]),
+            goods_to_give_away=tuple([camel.type, gold.type]),
+            goods_to_acquire=tuple([silver.type, cloth.type]),
         )
 
         await event.apply()

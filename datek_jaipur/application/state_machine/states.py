@@ -7,7 +7,7 @@ from datek_jaipur.application.state_machine.scope import Scope
 from datek_jaipur.errors import JaipurError
 
 
-class BaseState(_BaseState, ABC):
+class BaseState(_BaseState):
     async def transit(self, states: StateCollection) -> Type["BaseState"]:
         while True:
             try:
@@ -16,7 +16,9 @@ class BaseState(_BaseState, ABC):
                 pass
 
     @abstractmethod
-    async def get_next_state(self, states: StateCollection) -> Type["BaseState"]:
+    async def get_next_state(
+        self, states: StateCollection
+    ) -> Type["BaseState"]:  # pragma: no cover
         pass
 
 
@@ -27,7 +29,7 @@ class Start(BaseState):
     def type() -> StateType:
         return StateType.INITIAL
 
-    async def get_next_state(self, states: StateCollection) -> Type["BaseState"]:
+    async def get_next_state(self, states: StateCollection) -> Type[BaseState]:
         adapter = self.scope.adapter_class(self.__class__)
         self.scope.game = await adapter.collect_data()
         return PlayerTurn
@@ -40,7 +42,7 @@ class PlayerTurn(BaseState):
     def type() -> StateType:
         return StateType.STANDARD
 
-    async def get_next_state(self, states: StateCollection) -> Type["BaseState"]:
+    async def get_next_state(self, states: StateCollection) -> Type[BaseState]:
         adapter = self.scope.adapter_class(
             state_class=self.__class__,
             game=self.scope.game,
@@ -48,7 +50,10 @@ class PlayerTurn(BaseState):
 
         self.scope.game = await adapter.collect_data()
 
-        return PlayerWon if self.scope.game.winner else PlayerTurn
+        if self.scope.game.winner:
+            return PlayerWon
+
+        return PlayerTurn
 
 
 class PlayerWon(BaseState):
@@ -58,13 +63,15 @@ class PlayerWon(BaseState):
     def type() -> StateType:
         return StateType.STANDARD
 
-    async def get_next_state(self, states: StateCollection) -> Type["BaseState"]:
+    async def get_next_state(self, states: StateCollection) -> Type[BaseState]:
         adapter = self.scope.adapter_class(
             state_class=self.__class__,
             game=self.scope.game,
         )
 
-        return await adapter.collect_data()
+        await adapter.collect_data()
+
+        return End
 
 
 class End(BaseState, ABC):

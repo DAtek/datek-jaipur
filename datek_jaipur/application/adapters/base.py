@@ -1,8 +1,7 @@
 from abc import abstractmethod
-from typing import Type, Any
+from typing import Type
 
 from datek_async_fsm.state import BaseState
-
 from datek_jaipur.domain.compound_types.game import Game
 
 
@@ -12,5 +11,5 @@ class BaseAdapter:
         self._game = game
 
     @abstractmethod
-    async def collect_data(self) -> Any:  # pragma: no cover
+    async def collect_data(self) -> Game:  # pragma: no cover
         pass

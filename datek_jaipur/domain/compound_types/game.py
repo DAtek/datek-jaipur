@@ -14,7 +14,7 @@ class Game:
     cards_in_pack: CardSet
     cards_on_deck: CardSet
     coins: CoinSet
-    current_player: Optional[Player] = None
+    current_player: Player
     winner: Optional[Player] = None
 
 

@@ -1,7 +1,8 @@
 from dataclasses import dataclass
+from typing import AbstractSet, Optional
 
 from datek_jaipur.domain.compound_types.goods import GoodsType
-from datek_jaipur.domain.simple_types import Number, Amount
+from datek_jaipur.domain.simple_types import Amount, Number
 
 
 @dataclass(frozen=True)
@@ -14,19 +15,29 @@ CardList = list[Card]
 
 
 class CardSet(set[Card]):
-    def __add__(self, other) -> "CardSet":
+    def __add__(self, other: AbstractSet[Optional[Card]] | Card) -> "CardSet":
         if isinstance(other, CardSet):
             return CardSet(self.union(other))
 
         elif isinstance(other, Card):
             return CardSet(self.union(CardSet((other,))))
 
-    def __sub__(self, other) -> "CardSet":
+        raise TypeError
+
+    def __iadd__(self, other: AbstractSet[Optional[Card]] | Card) -> "CardSet":
+        return self + other
+
+    def __sub__(self, other: AbstractSet[Optional[Card]] | Card) -> "CardSet":
         if isinstance(other, CardSet):
             return CardSet(super().__sub__(other))
 
         elif isinstance(other, Card):
             return CardSet(super().__sub__(CardSet((other,))))
+
+        raise TypeError
+
+    def __isub__(self, other: AbstractSet[Optional[Card]] | Card) -> "CardSet":
+        return self - other
 
     def to_list(self) -> CardList:
         list_ = CardList(self)

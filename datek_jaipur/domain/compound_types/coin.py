@@ -1,5 +1,6 @@
 from collections import Counter
 from dataclasses import dataclass
+from typing import AbstractSet, Optional
 
 from datek_jaipur.domain.compound_types.goods import GoodsType
 from datek_jaipur.domain.simple_types import Number, Amount
@@ -16,7 +17,7 @@ class Coin:
 
 
 class CoinSet(set[Coin]):
-    def __sub__(self, other: "CoinSet") -> "CoinSet":
+    def __sub__(self, other: AbstractSet[Optional[Coin]]) -> "CoinSet":
         return CoinSet(super().__sub__(other))
 
     @property

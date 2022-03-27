@@ -68,8 +68,8 @@ class Solver:
 
     async def _simulate_player1(self):
         while self._player1 in self._turn_info:
-            await self._try_to_buy(self._player1)
             await self._try_to_sell(self._player1)
+            await self._try_to_buy(self._player1)
 
     async def _simulate_player2(self):
         while self._player2 in self._turn_info:

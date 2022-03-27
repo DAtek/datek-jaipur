@@ -4,7 +4,7 @@ from datek_jaipur.domain.events.card_set_created import CardSetCreated
 from datek_jaipur.utils import BaseEvent
 
 
-class AllCardSetsCreated(BaseEvent[None, CardSet]):
+class AllCardSetsCreated(BaseEvent[CardSet]):
     async def _create_result(self) -> CardSet:
         card_set_events: list[CardSetCreated] = []
 

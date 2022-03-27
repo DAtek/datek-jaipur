@@ -12,15 +12,13 @@ from datek_jaipur.domain.simple_types import Amount
 from datek_jaipur.utils import BaseEvent
 
 
-class GoodsSold(BaseEvent[GoodsSoldEventInput, Game]):
+class GoodsSold(BaseEvent[Game]):
     _cards_to_sell: CardSet
     _current_player: Player
     _herd_master: Optional[Player]
     _earned_coins: CoinSet
     _bonus: Amount
-
-    class Config:
-        input_type = GoodsSoldEventInput
+    _data_model: GoodsSoldEventInput
 
     async def _validate(self):
         self._cards_to_sell = self._data_model.game.current_player.goods.filter_by_type(
@@ -46,7 +44,7 @@ class GoodsSold(BaseEvent[GoodsSoldEventInput, Game]):
             else self._create_result_for_next_turn()
         )
 
-    def _create_result_for_end(self):
+    def _create_result_for_end(self) -> Game:
         self._herd_master = get_herd_master(
             self._data_model.game.player1, self._data_model.game.player2
         )
@@ -80,6 +78,7 @@ class GoodsSold(BaseEvent[GoodsSoldEventInput, Game]):
             cards_in_pack=self._data_model.game.cards_in_pack,
             cards_on_deck=self._data_model.game.cards_on_deck,
             coins=self._data_model.game.coins - self._earned_coins,
+            current_player=winner,
             winner=winner,
         )
 

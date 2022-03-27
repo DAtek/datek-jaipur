@@ -3,7 +3,7 @@ from datek_jaipur.domain.constants import COIN_COLLECTION
 from datek_jaipur.utils import BaseEvent
 
 
-class AllCoinSetsCreated(BaseEvent[None, CoinSet]):
+class AllCoinSetsCreated(BaseEvent[CoinSet]):
     async def _create_result(self) -> CoinSet:
         type_value_tuples = (
             (type_, value)
